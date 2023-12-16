@@ -1,0 +1,1 @@
+type: module saat menggunakan typescript bisa menyebabkan error
