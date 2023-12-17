@@ -1,3 +1,4 @@
+import { Document } from "mongoose";
 export enum RoleEnum {
     ROLE_USER = "ROLE_USER",
     ROLE_ADMIN = "ROLE_ADMIN"
@@ -23,6 +24,21 @@ export interface Pengirim extends Document {
     email: string;
     telepon: string;
     alamat: string;
+}
+
+export type StatusPengiriman = "BELUM_DIANGKUT" | "DALAM_PENGIRIMAN" | "TERKIRIM" | "DIBATALKAN";
+
+export interface Pengiriman extends Document {
+    resi: string;
+    nama_barang: string;
+    kuantitas: number;
+    berat: number;
+    biaya: number;
+    status: StatusPengiriman;
+    pengirim: Pengirim;
+    alamat_penerima: string;
+    bukti_pengiriman: string;
+    pesan: string;
 }
 
 

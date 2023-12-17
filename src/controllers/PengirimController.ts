@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { v4 as uuidv4 } from "uuid";
 import {
   getPengirim,
   getPengirimById,
@@ -7,10 +6,12 @@ import {
   updatePengirimById,
   deletePengirimById,
 } from "../models/Pengirim";
+import { replaceId } from "../helper";
 
 export const getAllPengirim = async (req: Request, res: Response) => {
   try {
-    const pengirim = await getPengirim();
+    const result = await getPengirim();
+    const pengirim = replaceId(result)
 
     return res.status(200).json(pengirim);
   } catch (error) {
@@ -27,7 +28,9 @@ export const findPengirim = async (req: Request, res: Response) => {
       return res.sendStatus(400)
     }
 
-    const pengirim = await getPengirimById(id)
+    const result = await getPengirimById(id)
+    const pengirim = replaceId(result)
+
     return res.status(200).json(pengirim).end()
   } catch (error) {
     console.log("[FIND_GUDANG] " + error);
@@ -43,7 +46,6 @@ export const createPengirim = async (req: Request, res: Response) => {
     }
 
     const pengirim = await insertPengirim({
-      id: uuidv4(),
       nama,
       email,
       telepon,

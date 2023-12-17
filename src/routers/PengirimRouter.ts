@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createPengirim, getAllPengirim, updatePengirim, deletePengirim, findPengirim } from "../controllers/pengirim";
+import { createPengirim, getAllPengirim, updatePengirim, deletePengirim, findPengirim } from "../controllers/PengirimController";
 
 export default (router: Router) => {
     router.get('/pengirim/all', getAllPengirim);

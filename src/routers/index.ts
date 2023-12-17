@@ -1,12 +1,14 @@
 import { Router } from "express";
-import authentication from './authentication';
-import gudang from "./gudang";
-import pengirim from "./pengirim";
+import PengirimRouter from "./PengirimRouter";
+import PengirimanRouter from "./PengirimanRouter";
+import GudangRouter from "./GudangRouter";
+import AuthenticationRouter from "./AuthenticationRouter";
 const router = Router()
 
 export default (): Router => {
-    authentication(router)
-    gudang(router)
-    pengirim(router)
+    AuthenticationRouter(router)
+    GudangRouter(router)
+    PengirimRouter(router)
+    PengirimanRouter(router)
     return router
 }

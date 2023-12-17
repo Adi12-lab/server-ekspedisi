@@ -7,10 +7,12 @@ import {
   updateGudangById,
   deleteGudangById,
 } from "../models/Gudang";
+import { replaceId } from "../helper";
 
 export const getAllGudang = async (req: Request, res: Response) => {
   try {
-    const gudang = await getGudang();
+    const result = await getGudang();
+    const gudang = replaceId(result)
 
     return res.status(200).json(gudang);
   } catch (error) {
@@ -26,7 +28,9 @@ export const findGudang = async (req: Request, res: Response) => {
       return res.sendStatus(400)
     }
 
-    const gudang = await getGudangById(id)
+    const result = await getGudangById(id)
+    const gudang = replaceId(result)
+    
     return res.status(200).json(gudang).end()
   } catch (error) {
     console.log("[FIND_GUDANG] " + error);
@@ -42,7 +46,6 @@ export const createGudang = async (req: Request, res: Response) => {
     }
 
     const gudang = await insertGudang({
-      id: uuidv4(),
       nama,
       alamat,
     });

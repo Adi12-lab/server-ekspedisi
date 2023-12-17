@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createGudang, getAllGudang, updateGudang, deleteGudang, findGudang } from "../controllers/gudang";
+import { createGudang, getAllGudang, updateGudang, deleteGudang, findGudang } from "../controllers/GudangController";
 
 export default (router: Router) => {
     router.get('/gudang/all', getAllGudang);
