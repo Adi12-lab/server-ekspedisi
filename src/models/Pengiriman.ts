@@ -4,7 +4,9 @@ import { generateJNTResiNumber } from "../helper";
 const PengirimanSchema: Schema = new mongoose.Schema<Pengiriman>({
     resi: {
         type: String,
-        default: generateJNTResiNumber(),
+        default: function() {
+            return generateJNTResiNumber();
+        },
         index: true,
         unique: true
     },
@@ -19,6 +21,7 @@ const PengirimanSchema: Schema = new mongoose.Schema<Pengiriman>({
         required: true
     },
     pesan: {type: String, required: false},
+    alamat_penerima: {type: String, required: true},
     bukti_pengiriman: {type: String, required: false}
     
 })
@@ -26,6 +29,7 @@ const PengirimanSchema: Schema = new mongoose.Schema<Pengiriman>({
 export const PengirimanModel = mongoose.model<Pengiriman>("pengiriman", PengirimanSchema)
 export const getPengiriman = ()=> PengirimanModel.find().populate("pengirim")
 export const getPengirimanByResi = (resi: string) => PengirimanModel.findOne({resi}).populate("pengirim")
+export const getPengirimanById = (resi: string) => PengirimanModel.findById(resi).populate("pengirim")
 export const insertPengiriman = async (values: Partial<Pengiriman>): Promise<Pengiriman | null> => {
     try {
         const Pengiriman = await PengirimanModel.create(values);
@@ -35,9 +39,9 @@ export const insertPengiriman = async (values: Partial<Pengiriman>): Promise<Pen
         return null;
     }
 };
-export const deletePengirimanByResi = async (resi: string): Promise<boolean> => {
+export const deletePengirimanById = async (id: string): Promise<boolean> => {
     try {
-        const deletedPengiriman = await PengirimanModel.findOneAndDelete({resi});
+        const deletedPengiriman = await PengirimanModel.findByIdAndDelete(id);
         
         return !!deletedPengiriman; // Return true if deletedPengiriman is truthy, false if it is null or undefined
     } catch (error) {
@@ -45,9 +49,9 @@ export const deletePengirimanByResi = async (resi: string): Promise<boolean> => 
         return false;
     }
 };
-export const updatePengirimanByResi = async (resi: string, values: Partial<Pengiriman>): Promise<Pengiriman | null> => {
+export const updatePengirimanById = async (id: string, values: Partial<Pengiriman>): Promise<Pengiriman | null> => {
     try {
-        const updatedPengiriman = await PengirimanModel.findOneAndUpdate({resi}, values, {new: true})
+        const updatedPengiriman = await PengirimanModel.findByIdAndUpdate(id, values, {new: true})
         return updatedPengiriman?.toObject() || null;
     } catch (error) {
         console.error("Error updating Pengiriman:", error);

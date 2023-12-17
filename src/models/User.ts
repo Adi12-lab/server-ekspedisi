@@ -2,10 +2,10 @@ import mongoose, { Schema } from "mongoose";
 import { RoleEnum, User } from "../types";
 
 
-const UserSchema: Schema = new mongoose.Schema({
-    username: {type: String, required: true},
+const UserSchema: Schema = new mongoose.Schema<User>({
+    username: {type: String, required: true, index: true, unique: true},
     email: {type: String, required: true},
-    role: {type: String, enum: Object.values(RoleEnum), default: RoleEnum.ROLE_USER ,required: true},
+    role: {type: String, enum: Object.values(RoleEnum), default: RoleEnum.ROLE_USER},
     password: {type: String, select: false}
 })
 

@@ -42,4 +42,12 @@ export interface Pengiriman extends Document {
 }
 
 
+export interface TrackPengiriman extends Document {
+    resi: string;
+    gudang: Gudang,
+    pengiriman: Pengiriman
+    tanggal_sampai: Date,
+    keterangan: string,
+}
+
 

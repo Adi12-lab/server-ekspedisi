@@ -19,7 +19,6 @@ export const login = async (req: Request, res: Response) => {
       if (!user) {
         return res.status(400).send("User belum teregistrasi");
       }
-      console.log(user)
       const isPasswordMatch = await comparePassword(password, user.password);
       //cek password apakah sesuai
       if(!isPasswordMatch) {

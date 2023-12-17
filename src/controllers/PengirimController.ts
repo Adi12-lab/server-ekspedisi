@@ -80,7 +80,7 @@ export const updatePengirim = async (req: Request, res: Response) => {
 export const deletePengirim = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-
+  
     const isDeleted = await deletePengirimById(id);
 
     return res.status(200).json({ success: isDeleted });
