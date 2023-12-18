@@ -14,12 +14,12 @@ import { deleteTrackPengirimanByPengirimanId } from "../models/TrackPengiriman";
 export const getAllPengiriman = async (req: Request, res: Response) => {
   try {
     const result = await getPengiriman();
-    const pengiriman = replaceId(result)
+    const pengiriman = replaceId(result);
     pengiriman.forEach((item: Pengiriman) => {
-      if(item.pengirim._id) {
-        item.pengirim.id = item.pengirim._id
+      if (item.pengirim._id) {
+        item.pengirim.id = item.pengirim._id;
       }
-    })
+    });
     // console.log(pengiriman)
     return res.status(200).json(pengiriman);
   } catch (error) {
@@ -36,9 +36,9 @@ export const findPengirimanById = async (req: Request, res: Response) => {
       return res.sendStatus(400);
     }
 
-    const result= await getPengirimanById(id);
-    const pengiriman = replaceId(result)
-    pengiriman.pengirim.id = pengiriman.pengirim._id
+    const result = await getPengirimanById(id);
+    const pengiriman = replaceId(result);
+    pengiriman.pengirim.id = pengiriman.pengirim._id;
     // pengiriman
     return res.status(200).json(pengiriman).end();
   } catch (error) {
@@ -54,9 +54,9 @@ export const findPengirimanByResi = async (req: Request, res: Response) => {
       return res.sendStatus(400);
     }
 
-    const result= await getPengirimanByResi(resi);
-    const pengiriman = replaceId(result)
-    pengiriman.pengirim.id = pengiriman.pengirim._id
+    const result = await getPengirimanByResi(resi);
+    const pengiriman = replaceId(result);
+    pengiriman.pengirim.id = pengiriman.pengirim._id;
     // pengiriman
     return res.status(200).json(pengiriman).end();
   } catch (error) {
@@ -97,7 +97,7 @@ export const createPengiriman = async (req: Request, res: Response) => {
       status,
       pengirim: pengirim.id,
       alamat_penerima,
-      pesan
+      pesan,
     });
 
     return res.status(201).json(pengiriman).end();
@@ -119,7 +119,7 @@ export const updatePengiriman = async (req: Request, res: Response) => {
       pengirim,
       alamat_penerima,
       pesan,
-      bukti_pengiriman
+      bukti_pengiriman,
     } = req.body;
 
     if (
@@ -135,7 +135,7 @@ export const updatePengiriman = async (req: Request, res: Response) => {
       return res.sendStatus(400);
     }
 
-    const pengiriman = await updatePengirimanById(id, {  
+    const pengiriman = await updatePengirimanById(id, {
       nama_barang,
       kuantitas,
       berat,
@@ -144,8 +144,8 @@ export const updatePengiriman = async (req: Request, res: Response) => {
       pengirim: pengirim.id,
       alamat_penerima,
       pesan,
-      bukti_pengiriman
-     });
+      bukti_pengiriman,
+    });
 
     return res.status(200).json(pengiriman).end();
   } catch (error) {
@@ -157,11 +157,8 @@ export const updatePengiriman = async (req: Request, res: Response) => {
 export const deletePengiriman = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const isDeleteTrack =await deleteTrackPengirimanByPengirimanId(id) //dihapus terlebih dahulu yang berkaitan
-    let isDeletedPengiriman = false
-    if(isDeleteTrack) {
-      isDeletedPengiriman = await deletePengirimanById(id);
-    }
+    await deleteTrackPengirimanByPengirimanId(id); //dihapus terlebih dahulu yang berkaitan
+    const isDeletedPengiriman = await deletePengirimanById(id);
 
     return res.status(200).json({ success: isDeletedPengiriman });
   } catch (error) {
